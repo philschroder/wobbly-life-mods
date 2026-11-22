@@ -1,0 +1,9 @@
+bin/
+obj/
+*.user
+.vs/
+# Never commit game files or third-party mod binaries
+lib/
+GameAssemblies/
+*.dll
+!tools/**/*.dll
