@@ -4,7 +4,7 @@ Mods for [Wobbly Life](https://store.steampowered.com/app/1211020/Wobbly_Life/) 
 
 | Mod | Status | What it does |
 |-----|--------|--------------|
-| [HundredPlayerWorld](src/HundredPlayerWorld) | **Untested** – compiles, patches apply in game; panel/kick/ban not yet verified | Raises the online lobby cap from 4 to 100 (configurable) when you host, plus an F8 host panel (player count, kick, persistent ban). Guests need nothing installed. |
+| [HundredPlayerWorld](src/HundredPlayerWorld) | **Working on Steam (Mono / BepInEx 5)** – confirmed by the owner; detailed test results still to be recorded | Raises the online lobby cap from 4 to 100 (configurable) when you host, plus an F8 host panel (player count, kick, persistent ban). Guests need nothing installed. |
 
 > ⚠️ 100 players is far beyond what the game was designed for (official cap is 4). Expect desyncs, missions/jobs
 > that assume ≤4 players, and host performance problems. Use a fresh world and keep backups.
@@ -12,7 +12,7 @@ Mods for [Wobbly Life](https://store.steampowered.com/app/1211020/Wobbly_Life/) 
 ## Quick start
 
 1. Install **BepInEx 5 (x64, Mono)** into the Steam game folder, run the game once, quit.
-   *Confirm the game is Mono first:* `Wobbly Life_Data/Managed/Assembly-CSharp.dll` should exist. If you only find
+   *The Steam build has been confirmed to be Mono. To double-check on your copy:* `Wobbly Life_Data/Managed/Assembly-CSharp.dll` should exist. If you only find
    `GameAssembly.dll`, the Steam build is IL2CPP and you need BepInEx 6 IL2CPP instead (the csproj and plugin base class change).
 2. Build: `cd src/HundredPlayerWorld && dotnet build -c Release`
 3. Copy `bin/Release/net472/HundredPlayerWorld.dll` to `<game>/BepInEx/plugins/`.
