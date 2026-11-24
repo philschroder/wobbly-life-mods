@@ -27,12 +27,14 @@ namespace HundredPlayerWorld
     {
         public const string Guid = "local.wobblylife.hundredplayerworld";
         public const string Name = "Hundred Player World";
-        public const string Version = "0.1.0";
+        public const string Version = "0.2.0";
 
         internal static ManualLogSource Log;
         internal static ConfigEntry<int> MaxPlayers;
         internal static ConfigEntry<bool> Diagnostics;
         internal static ConfigEntry<string> ArgNameHint;
+        internal static ConfigEntry<UnityEngine.KeyCode> ToggleKey;
+        internal static ConfigEntry<bool> ShowHint;
 
         private const string BaseTypeName = "HawkNetworking.HawkNetworkManager";
 
@@ -47,7 +49,12 @@ namespace HundredPlayerWorld
             ArgNameHint = Config.Bind("General", "MaxArgNameContains", "max",
                 "HostServer int parameters whose name contains this (case-insensitive) are treated as the player cap.");
 
+            ToggleKey = Config.Bind("Panel", "ToggleKey", UnityEngine.KeyCode.F8, "Key that opens/closes the host panel.");
+            ShowHint = Config.Bind("Panel", "ShowHint", true, "Show a small 'Press F8' hint in the top-left corner.");
+
             Log.LogInfo($"{Name} {Version} loaded. MaxPlayers={MaxPlayers.Value}");
+
+            gameObject.AddComponent<PanelUI>();
 
             try { PatchAll(); }
             catch (Exception e) { Log.LogError("Patching failed: " + e); }
