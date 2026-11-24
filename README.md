@@ -4,7 +4,7 @@ Mods for [Wobbly Life](https://store.steampowered.com/app/1211020/Wobbly_Life/) 
 
 | Mod | Status | What it does |
 |-----|--------|--------------|
-| [HundredPlayerWorld](src/HundredPlayerWorld) | **Untested scaffold** – compiles, not yet run in game | Raises the online lobby cap from 4 to 100 (configurable) when you host. Guests need nothing installed. |
+| [HundredPlayerWorld](src/HundredPlayerWorld) | **Untested** – compiles, patches apply in game; panel/kick/ban not yet verified | Raises the online lobby cap from 4 to 100 (configurable) when you host, plus an F8 host panel (player count, kick, persistent ban). Guests need nothing installed. |
 
 > ⚠️ 100 players is far beyond what the game was designed for (official cap is 4). Expect desyncs, missions/jobs
 > that assume ≤4 players, and host performance problems. Use a fresh world and keep backups.
@@ -18,6 +18,14 @@ Mods for [Wobbly Life](https://store.steampowered.com/app/1211020/Wobbly_Life/) 
 3. Copy `bin/Release/net472/HundredPlayerWorld.dll` to `<game>/BepInEx/plugins/`.
 4. Host a world, then read `BepInEx/LogOutput.log`. With `DiagnosticsMode = true` (default) it prints every network
    manager type and `HostServer` / `GetMaxPlayerCount` signature it found and what it changed.
+
+## Host panel (F8)
+
+While hosting, press **F8** (configurable) to see players / max, and to **Kick** or **Ban** (click twice to confirm).
+Bans are stored by platform user id in `BepInEx/config/HundredPlayerWorld.bans.txt`; banned players are re-kicked
+if they rejoin. The panel finds players and the kick method by name via reflection. If a button does nothing, the log
+prints the signatures it found (`KickPlayer exists but no overload matched ...`) - send that and the target gets fixed.
+The host's own entry is marked "(you)" and cannot be kicked.
 
 Config: `BepInEx/config/local.wobblylife.hundredplayerworld.cfg` (`MaxPlayers`, `DiagnosticsMode`, `MaxArgNameContains`).
 
