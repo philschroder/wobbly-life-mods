@@ -17,8 +17,12 @@
 - Game layer: `WobblyNetworkManager` (`KickPlayer`), `PlayerController`, `PlayerCharacter`, `GameInstance`, `LocalPlayerManager`.
 - Existing mod technique: Harmony prefix on each `HostServer` raising the max-players argument ("only ever raises the game's value"), plus logging hooks. One of its notes: patching a force-disconnect method crashes the game at the splash screen – avoid.
 
+## Confirmed on the Steam build
+- The Steam build is **Mono**, so **BepInEx 5** is the right loader (confirmed by the repo owner).
+- HundredPlayerWorld loads and works in game on Steam. Per-feature details (exact class names, kick/ban behavior, how high the player count was tested) are not yet recorded - add them here as they are verified.
+
 ## Open questions (resolve on the Steam build)
-1. Is the Steam build Mono or IL2CPP? (decides BepInEx 5 vs 6)
+1. ~~Is the Steam build Mono or IL2CPP?~~ Mono (see above).
 2. Is there a Steam-specific manager subclass (name?), and does it have `HostServer` with a max-players parameter, or is Steam lobby size set elsewhere (`ISteamMatchmaking.CreateLobby(maxMembers)` caps at 250)?
 3. Does the Steam build also route through EOS for crossplay (then the EOS lobby `MaxLobbyMembers` also matters)?
 4. Any hard-coded 4-player assumptions: spawn points, UI slot arrays, split-screen, mission scripts.
