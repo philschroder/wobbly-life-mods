@@ -16,7 +16,7 @@ namespace VehicleSpawner
     /// vehicle-looking GameObjects/prefabs currently loaded. We use that to decide how to spawn a
     /// networked spaceship. Nothing is spawned or modified yet.
     /// </summary>
-    [BepInPlugin("local.wobblylife.vehiclespawner", "Vehicle Spawner", "0.1.0")]
+    [BepInPlugin("local.wobblylife.vehiclespawner", "Vehicle Spawner", "0.2.0")]
     public class Plugin : BaseUnityPlugin
     {
         private static readonly Regex TypeRx = new Regex("vehicle|spawn|aircraft|plane|heli|rocket|ufo|ship|boat|car(?!d)|prefab|seat|pilot|drive",
@@ -24,12 +24,29 @@ namespace VehicleSpawner
         private static readonly Regex ObjRx = new Regex("vehicle|aircraft|plane|heli|rocket|ufo|ship|boat|car(?!d)|truck|bus|tractor|jet|bike",
             RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
+        internal static Plugin Instance;
+        internal static BepInEx.Logging.ManualLogSource Log;
+        internal static SpawnerPanel Panel;
+        internal static ConfigEntry<KeyCode> PanelKey;
+        internal static ConfigEntry<string> ShipTemplate;
+        internal static ConfigEntry<float> ShipScale;
+        internal static ConfigEntry<float> ShipSpeed;
+        internal static ConfigEntry<bool> TryNetworkSpawn;
+
         private ConfigEntry<KeyCode> _key;
 
         private void Awake()
         {
+            Instance = this;
+            Log = Logger;
+            PanelKey = Config.Bind("Spawner", "PanelKey", KeyCode.F10, "Opens/closes the spawner panel.");
+            ShipTemplate = Config.Bind("Spawner", "ShipTemplate", "helicopter", "Name fragment of the vehicle used for the 'Spaceship' preset (set after reading the discovery dump).");
+            ShipScale = Config.Bind("Spawner", "ShipScale", 3f, "Scale applied to the spaceship preset. Guests may not see scale (not synced).");
+            ShipSpeed = Config.Bind("Spawner", "ShipSpeed", 25f, "Flight speed in m/s for spawned ships.");
+            TryNetworkSpawn = Config.Bind("Spawner", "TryNetworkSpawn", true, "Try the game's own network spawn first so guests see the vehicle; otherwise spawn host-only.");
             _key = Config.Bind("General", "DumpKey", KeyCode.F9, "Press in game to write the discovery file.");
-            Logger.LogInfo($"Vehicle Spawner 0.1.0 loaded. Press {_key.Value} in game to dump discovery info.");
+            Panel = gameObject.AddComponent<SpawnerPanel>();
+            Logger.LogInfo($"Vehicle Spawner 0.2.0 loaded. Press {_key.Value} in game to dump discovery info.");
         }
 
         private void Update()

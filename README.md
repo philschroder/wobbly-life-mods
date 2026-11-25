@@ -5,7 +5,7 @@ Mods for [Wobbly Life](https://store.steampowered.com/app/1211020/Wobbly_Life/) 
 | Mod | Status | What it does |
 |-----|--------|--------------|
 | [HundredPlayerWorld](src/HundredPlayerWorld) | **Working on Steam (Mono / BepInEx 5)** – confirmed by the owner; detailed test results still to be recorded | Raises the online lobby cap from 4 to 100 (configurable) when you host, plus an F8 host panel (player count, kick, persistent ban). Guests need nothing installed. |
-| [VehicleSpawner](src/VehicleSpawner) | **Step 1: discovery only** – compiles, not yet run | Press F9 in game to dump vehicle/spawn classes and vehicle prefabs to `BepInEx/VehicleSpawner.discovery.txt`. Will grow into an on-demand spawner for large vehicles (first target: a flying spaceship). |
+| [VehicleSpawner](src/VehicleSpawner) | **v0.2 – compiles, not yet run in game** | F10 panel: lists vehicle-like prefabs, spawns copies at a chosen scale, and a flight controller (arrows / RightShift / RightCtrl). "Spaceship" preset = an existing vehicle, scaled up, flying. F9 still dumps discovery info. Tries the game's network spawn first; otherwise spawns host-only. |
 
 > ⚠️ 100 players is far beyond what the game was designed for (official cap is 4). Expect desyncs, missions/jobs
 > that assume ≤4 players, and host performance problems. Use a fresh world and keep backups.
